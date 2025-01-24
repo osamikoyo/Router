@@ -22,5 +22,5 @@ func (h *Handler) getError(handler HandlerFunc) http.HandlerFunc {
 }
 
 func (s Server) Handler(w http.ResponseWriter, r *http.Request) error {
-
+	
 }

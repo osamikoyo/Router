@@ -7,10 +7,16 @@ type Line struct {
 	Hostname string `toml:"hostname"`
 }
 
-type Config struct {
+type config struct {
 	Port uint `toml:"proxy_port"`
 	Logging bool `toml:"logging"`
-	Lines []Line `toml:"line"`
+	Lines []Line
+}
+
+type Config struct {
+	Port uint
+	Logging bool
+	Lines map[string]uint
 }
 
 type Parser struct {
@@ -24,7 +30,13 @@ func New() Parser {
 }
 
 func (p Parser) Parse() (Config, error) {
-	var cfg Config
+	var cfg config
 	_, err := toml.DecodeFile(p.ConfigFilePath, &cfg)
-	return cfg, err
+
+	var newcfg Config
+	for _, c := range cfg.Lines {
+		newcfg.Lines[c.Hostname] = c.LocalhostPort
+	}
+
+	return newcfg, err
 }
