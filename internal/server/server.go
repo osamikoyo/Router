@@ -8,5 +8,5 @@ import (
 type Server struct {
 	HttpServer *http.Server
 	Logger loger.Logger
-	Handler Handler
+	Handlers Handler
 }
