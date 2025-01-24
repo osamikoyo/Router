@@ -29,10 +29,9 @@ func New() (Server, error) {
 
 func (s Server) Run() error {
 	s.Logger.Info().Msg("Starting routing server...")
+	
 	mux := http.NewServeMux()
-
 	mux.Handle("/", s.Handlers.getError(s.Handlers.ProxyHandler))
-
 	s.HttpServer.Handler = mux
 
 	s.Logger.Info().Msg("Route http server started on " + fmt.Sprintf("%s:%d", "localhost", s.Handlers.Config.Port))
