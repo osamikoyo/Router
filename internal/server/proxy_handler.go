@@ -20,6 +20,9 @@ type HandlerFunc func(w http.ResponseWriter, r *http.Request) error
 
 func (h *Handler) getError(handler HandlerFunc) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
+		log := fmt.Sprintf("HostName: %s, Method : %s", request.URL.Hostname(), request.Method)
+		h.Logger.Info().Msg(log)
+
 		if err := handler(writer, request);err != nil{
 			h.Logger.Error().Err(err)
 		}
